@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paul Phoenix P. Renacido | Cosmic Phoenix Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Profile Image Container Adjustments */
+        .profile-image-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-img-placeholder {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+
+        /* Lightbox Modal Box Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 1, 8, 0.9);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 123, 0, 0.4);
+            box-shadow: 0 0 30px rgba(255, 123, 0, 0.3);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #ffffff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #ff7b00;
+        }
+
+        .cert-card {
+            cursor: pointer;
+        }
+
+        .cert-status {
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        .cert-status:hover {
+            color: #ff7b00;
+            transform: scale(1.03);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- COSMIC BACKGROUND -->
+    <canvas id="space-canvas"></canvas>
+
+    <!-- PHOENIX FLIGHT CANVAS -->
+    <canvas id="phoenix-canvas" class="hidden"></canvas>
+
+    <!-- EGG SCREEN -->
+    <div id="egg-screen" class="egg-overlay">
+
+        <div class="egg-stage">
+
+            <div class="phoenix-egg" id="phoenix-egg">
+
+                <!-- Flapping Egg Wings -->
+                <div class="egg-wing wing-left"></div>
+                <div class="egg-wing wing-right"></div>
+
+                <!-- Divine Outer Glow -->
+                <div class="egg-divine-glow"></div>
+
+                <!-- Rotating Divine Rings -->
+                <div class="divine-ring ring-one"></div>
+                <div class="divine-ring ring-two"></div>
+                <div class="divine-ring ring-three"></div>
+
+                <!-- Inner Core -->
+                <div class="egg-core"></div>
+
+                <!-- Internal Refraction -->
+                <div class="egg-refraction"></div>
+
+                <!-- Facets -->
+                <div class="egg-facets"></div>
+
+                <!-- Cyan Energy -->
+                <div class="cyan-halo"></div>
+                <div class="energy-field"></div>
+
+                <!-- Cracks -->
+                <svg class="crack-svg" viewBox="0 0 200 280">
+
+                    <filter id="neon-glow"
+                            x="-50%"
+                            y="-50%"
+                            width="200%"
+                            height="200%">
+
+                        <feGaussianBlur
+                            stdDeviation="3"
+                            result="blur"/>
+
+                        <feMerge>
+                            <feMergeNode in="blur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+
+                    </filter>
+
+                    <path
+                        id="crack-1"
+                        class="crack-path"
+                        filter="url(#neon-glow)"
+                        d="M 100 25 Q 90 60 110 85 T 85 130 T 115 160"/>
+
+                    <path
+                        id="crack-2"
+                        class="crack-path"
+                        filter="url(#neon-glow)"
+                        d="M 115 160 Q 140 180 95 210 T 130 245 T 90 265"/>
+
+                    <path
+                        id="crack-3"
+                        class="crack-path"
+                        filter="url(#neon-glow)"
+                        d="
+                        M 110 85 Q 150 95 170 120 T 135 170
+                        M 85 130 Q 40 140 30 180 T 70 220
+                        M 100 25 Q 130 10 150 45
+                        "/>
+
+                </svg>
+
+                <!-- Explosion Particles -->
+                <div
+                    class="crack-particles-container"
+                    id="particle-node">
+                </div>
+
+            </div>
+
+            <!-- EXACTLY ANCHORED BELOW EGG -->
+            <p class="click-hint" id="hint-text">
+                TOUCH THE EGG TO RELEASE THE PHOENIX
+                <span id="counter">(0/3)</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- PORTFOLIO -->
+    <div id="portfolio-main" class="portfolio-container hidden">
+
+        <header class="cosmic-nav">
+
+            <div class="logo">
+                Portfolio
+            </div>
+
+            <nav>
+                <a href="#profile">About</a>
+                <a href="#education">Education</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#certifications">Certifications</a>
+            </nav>
+
+        </header>
+
+
+        <main>
+
+            <!-- PROFILE SECTION -->
+            <section id="profile" class="cosmic-section">
+
+                <div class="profile-layout">
+                    <div class="profile-image-container">
+                        <img src="./mypic.png" alt="Paul Phoenix P. Renacido" class="profile-img-placeholder">
+                        <div class="image-frame-glow"></div>
+                    </div>
+
+                    <div class="profile-details">
+                        <h1 class="cosmic-title">
+                            Paul Phoenix P. Renacido
+                        </h1>
+
+                        <p class="cosmic-subtitle">
+                            BSIT Student | Data Analytics Enthusiast
+                        </p>
+
+                        <p class="cosmic-location">
+                            📍 Manila, Philippines | ✉️ <a href="mailto:Akosiphoenix12@gmail.com">Akosiphoenix12@gmail.com</a>
+                        </p>
+
+                        <div class="cosmic-card">
+                            <p>
+                                Tara Valorant 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- EDUCATION SECTION -->
+            <section id="education" class="cosmic-section">
+
+                <h2 class="section-title">Education</h2>
+
+                <div class="cosmic-card">
+                    <h3>Philippine Christian University</h3>
+                    <p class="card-meta">Bachelor of Science in Information Technology | 2024 - 20xx | Enrolled</p>
+                    <p class="achievement-tag">🏅 Dean's Lister</p>
+                </div>
+
+                <div class="cosmic-card">
+                    <h3>Carlos P. Garcia Highschool</h3>
+                    <p class="card-meta">TVL - Programming | 2022 - 2024 | Graduated</p>
+                    <p class="achievement-tag">🏅 With Honors</p>
+                </div>
+
+            </section>
+
+
+            <!-- EXPERIENCE SECTION -->
+            <section id="experience" class="cosmic-section">
+
+                <h2 class="section-title">Work Experience</h2>
+
+                <div class="cosmic-card">
+                    <h3>Mail Processor</h3>
+                    <p class="card-meta">Makati Central Post Office • Work Immersion | March 2024 - April 2024</p>
+                    <ul class="cosmic-list">
+                        <li>Sorted and processed mail efficiently in a fast-paced environment.</li>
+                        <li>Acquired a deep understanding of standard office operations and workflow procedures.</li>
+                        <li><strong>Tools Used:</strong> Hands-on operation</li>
+                    </ul>
+                </div>
+
+            </section>
+
+
+            <!-- PROJECTS SECTION -->
+            <section id="projects" class="cosmic-section">
+
+                <h2 class="section-title">Featured Projects</h2>
+
+                <div class="grid-2col">
+                    <div class="cosmic-card project-card">
+                        <div class="project-image-slot">
+                            <img src="lotcafe.jpg" alt="Project Placeholder" class="project-img-placeholder">
+                            <div class="image-overlay-glow"></div>
+                        </div>
+                        <h3>Lot19 Café: Smart Order & Loyalty System</h3>
+                        <p class="card-meta">Technologies: Java and SQL</p>
+                        <p>An automated ordering and loyalty management platform designed to streamline cafe operations, simplify customer rewards, and enforce seamless compliance with Philippine Republic Acts for Senior Citizen and PWD discounts (20%).</p>
+                    </div>
+
+                    <div class="cosmic-card project-card">
+                        <div class="project-image-slot">
+                            <img src="casino.jpg" alt="Project Placeholder" class="project-img-placeholder">
+                            <div class="image-overlay-glow"></div>
+                        </div>
+                        <h3>IF-ELSE ONLINE CASINO</h3>
+                        <p class="card-meta">Technologies: HTML, CSS JAVASCRIPT</p>
+                        <p>A web app that simulates casino games by using if-else logic to handle bets, evaluate card hands, and calculate wins or losses in real time.</p>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- SKILLS SECTION -->
+            <section id="skills" class="cosmic-section">
+
+                <h2 class="section-title">Technical & Personal Skills</h2>
+
+                <div class="grid-2col">
+
+                    <div class="cosmic-card">
+                        <h3>Programming Languages</h3>
+                        <div class="tag-container">
+                            <span class="skill-tag">HTML</span>
+                            <span class="skill-tag">CSS</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">C</span>
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Bootstrap</span>
+                            <span class="skill-tag">React</span>
+                        </div>
+                    </div>
+
+                    <div class="cosmic-card">
+                        <h3>Databases & Platforms</h3>
+                        <div class="tag-container">
+                            <span class="skill-tag">SQL</span>
+                        </div>
+
+                        <h3 class="sub-skill-title">Design & Productivity Tools</h3>
+                        <div class="tag-container">
+                            <span class="skill-tag">Adobe Illustrator</span>
+                            <span class="skill-tag">Adobe Photoshop</span>
+                            <span class="skill-tag">Microsoft Excel</span>
+                            <span class="skill-tag">Word</span>
+                            <span class="skill-tag">PowerPoint</span>
+                        </div>
+                    </div>
+
+                    <div class="cosmic-card">
+                        <h3>Currently Learning</h3>
+                        <div class="tag-container">
+                            <span class="skill-tag learning-tag">R Programming</span>
+                        </div>
+                    </div>
+
+                    <div class="cosmic-card">
+                        <h3>Other Skills</h3>
+                        <div class="tag-container">
+                            <span class="skill-tag">Fitness Coach</span>
+                            
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- CERTIFICATIONS SECTION -->
+<section id="certifications" class="cosmic-section">
+
+    <h2 class="section-title">Trainings, Certifications & Awards</h2>
+
+    <div class="grid-2col">
+
+        <div class="cosmic-card cert-card" onclick="openCertModal('cert_nc3_visual_graphics.jpg')">
+            <h3>National Certificate III in Visual Graphic Design</h3>
+            <p class="card-meta">Issuer: TESDA | Date: May 23, 2024</p>
+            <p class="cert-status">Certification</p>
+        </div>
+
+        <div class="cosmic-card cert-card" onclick="openCertModal('cert_python_variables.jpg')">
+            <h3>Python Development & Data Science: Variables and Data Types</h3>
+            <p class="card-meta">Issuer: MTF Institute of Management, Technology and Finance | Date: Oct 27, 2024</p>
+            <p class="cert-status">Course Completion</p>
+        </div>
+
+        <div class="cosmic-card cert-card" onclick="openCertModal('cert_python_gui.jpg')">
+            <h3>Create a GUI with Python</h3>
+            <p class="card-meta">Issuer: Peter A | Date: Nov 14, 2024</p>
+            <p class="cert-status">Course Completion</p>
+        </div>
+
+        <div class="cosmic-card cert-card" onclick="openCertModal('cert_python_beginners.jpg')">
+            <h3>Python Complete Course For Beginners</h3>
+            <p class="card-meta">Issuer: Horizon Tech | Date: Nov 19, 2024</p>
+            <p class="cert-status">Course Completion</p>
+        </div>
+
+        <div class="cosmic-card cert-card" onclick="openCertModal('cert_web_dev_foundation.jpg')">
+            <h3>CSS, JavaScript And PHP Complete Course For Beginners</h3>
+            <p class="card-meta">Issuer: PROPER DOT INSTITUTE | Date: Nov 19, 2024</p>
+            <p class="cert-status">Course Completion</p>
+        </div>
+
+        <div class="cosmic-card cert-card" onclick="openCertModal('cert_fullstack_foundations.jpg')">
+            <h3>Foundations of Web Development: CSS, Bootstrap, JS, React</h3>
+            <p class="card-meta">Issuer: PROPER DOT INSTITUTE | Date: Nov 20, 2024</p>
+            <p class="cert-status">Course Completion</p>
+        </div>
+
+        <div class="cosmic-card cert-card" onclick="openCertModal('cert_python_flask.jpg')">
+            <h3>Python And Flask Framework Complete Course</h3>
+            <p class="card-meta">Issuer: Horizon Tech | Date: Dec 28, 2024</p>
+            <p class="cert-status">Course Completion</p>
+        </div>
+
+        <div class="cosmic-card cert-card" onclick="openCertModal('cert_js_functions.jpg')">
+            <h3>Learn Functions & Function Expressions in Modern JavaScript</h3>
+            <p class="card-meta">Issuer: Noshad Yousuf | Date: Dec 28, 2024</p>
+            <p class="cert-status">Course Completion</p>
+        </div>
+
+        <div class="cosmic-card cert-card" onclick="openCertModal('cert_python_mastery.jpg')">
+            <h3>Python, Java and PHP Essentials: Complete Coding Bootcamp</h3>
+            <p class="card-meta">Issuer: Oak Academy | Date: Dec 2024</p>
+            <p class="cert-status">Course Completion</p>
+        </div>
+
+        <div class="cosmic-card cert-card" onclick="openCertModal('cert_phytonmastery_complete_web_progcourse.jpg')">
+            <h3>Python Mastery: The Complete Web Programming Course</h3>
+            <p class="card-meta">Issuer: Knowledge Nest | Date: Jan 2, 2025</p>
+            <p class="cert-status">Course Completion</p>
+        </div>
+
+    </div>
+
+</section>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- CERTIFICATE LIGHTBOX MODAL -->
+    <div id="certModal" class="modal" onclick="closeCertModal()">
+        <span class="close-btn" onclick="closeCertModal()">&times;</span>
+        <img class="modal-content" id="modalImg" alt="Certificate Image" onclick="event.stopPropagation()">
+    </div>
+
+  
+<!-- Your existing portfolio content goes here -->
+
+  <!-- Chatbase Embedded Widget Script -->
+  <script>
+  (function(){
+    if (!window.chatbase || window.chatbase("getState") !== "initialized") {
+      window.chatbase = (...arguments) => {
+        if (!window.chatbase.q) { window.chatbase.q = [] }
+        window.chatbase.q.push(arguments)
+      };
+      window.chatbase = new Proxy(window.chatbase, {
+        get(target, prop) {
+          if (prop === "q") { return target.q }
+          return (...args) => target(prop, ...args)
+        }
+      })
+    }
+    
+    const onLoad = function() {
+      // Set the delay time in milliseconds (e.g., 2500ms = 2.5 seconds)
+      const ANIMATION_DELAY = 11000;
+
+      setTimeout(() => {
+        const script = document.createElement("script");
+        script.src = "https://www.chatbase.co/embed.min.js";
+        script.id = "e3pIvrrFlygGgoU1StNGv";
+        script.domain = "www.chatbase.co";
+        document.body.appendChild(script);
+      }, ANIMATION_DELAY);
+    };
+
+    if (document.readyState === "complete") {
+      onLoad();
+    } else {
+      window.addEventListener("load", onLoad);
+    }
+  })();
+</script>
+
+
+
+
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
